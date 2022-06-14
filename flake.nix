@@ -21,7 +21,7 @@
       });
 
       packageName = "factorio-bot";
-    in {
+    in rec {
 
       packages.${packageName} = pkgs.poetry2nix.mkPoetryApplication {
         inherit python projectDir overrides;
@@ -30,7 +30,8 @@
       };
 
       defaultPackage = self.packages.${system}.${packageName};
-
+      apps.${system}.${packageName} = packages.${packageName};
+      defaultApp = apps.${system}.${packageName};
       devShell = pkgs.mkShell {
         buildInputs = [
           (pkgs.poetry2nix.mkPoetryEnv {
