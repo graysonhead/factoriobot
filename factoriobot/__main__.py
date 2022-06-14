@@ -20,6 +20,7 @@ def main():
         if current_players is None:
             current_players = new_list_of_players
             continue
+
         new_players = list(
             set(new_list_of_players).difference(current_players)
         )
@@ -27,15 +28,15 @@ def main():
             set(current_players).difference(new_list_of_players)
         )
         if new_players or lost_players:
-            if new_players:
-                content = (f"A player has joined the server: \n"
+            if new_players and not lost_players:
+                content = (f"New player(s) joined the server: \n"
                            f"{','.join(new_players)}")
-            elif lost_players:
-                content = (f"A player has left the server: \n"
+            elif lost_players and not new_players:
+                content = (f"Player(s) have left the server: \n"
                            f"{','.join(lost_players)}")
             else:
-                content = (f"We gained: {','.join(new_players)} but lost: "
-                           f"{','.join(lost_players)}\n")
+                content = (f"New player(s): {','.join(new_players)} joined "
+                           f"the server and {','.join(lost_players)} left\n")
             webhook = DiscordWebhook(
                 url=webhook_url,
                 content=content
