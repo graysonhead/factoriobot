@@ -1,12 +1,17 @@
 from rcon.source import Client
 import time
 from discord_webhook import DiscordWebhook
+import os
 
 def main():
+    rcon_address = os.getenv["FB_RCON_ADDRESS"]
+    rcon_port = os.getenv["FB_RCON_PORT"]
+    rcon_password = os.getenv["FB_RCON_PASSWORD"]
+    webhook_url = os.getenv["FB_WEBHOOK_URL"]
     previous_response = None
     previous_player_count = None
     while True:
-        with Client('factorio.i.graysonhead.net', 25575, passwd='$GAME_PASSWORD') as client:
+        with Client(rcon_address, int(rcon_port), passwd=rcon_password) as client:
             response = client.run('/players', 'online')
         player_count = response[response.find('(')+1:response.find(')')]
         if response != previous_response and previous_response is not None:
@@ -15,7 +20,7 @@ def main():
             else:
                 content = f"A player has left the server: \n{response}"
             webhook = DiscordWebhook(
-                url="https://discord.com/api/webhooks/986093737493012490/xyto8jIU4zmRpVO4CJLKQVm-PWR6NAmvGDvzLEdjcUw3tiXdLWKKpSZyy84Fd8P5kEor",
+                url=webhook_url,
                 content=content
                 )
             resp = webhook.execute()
