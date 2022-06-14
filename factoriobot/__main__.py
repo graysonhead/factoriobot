@@ -4,10 +4,10 @@ from discord_webhook import DiscordWebhook
 import os
 
 def main():
-    rcon_address = os.getenv["FB_RCON_ADDRESS"]
-    rcon_port = os.getenv["FB_RCON_PORT"]
-    rcon_password = os.getenv["FB_RCON_PASSWORD"]
-    webhook_url = os.getenv["FB_WEBHOOK_URL"]
+    rcon_address = os.getenv("FB_RCON_ADDRESS")
+    rcon_port = os.getenv("FB_RCON_PORT")
+    rcon_password = os.getenv("FB_RCON_PASSWORD")
+    webhook_url = os.getenv("FB_WEBHOOK_URL")
     previous_response = None
     previous_player_count = None
     while True:
