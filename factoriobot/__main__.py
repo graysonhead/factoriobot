@@ -2,12 +2,19 @@ from rcon.source import Client
 import time
 from discord_webhook import DiscordWebhook
 import os
+import subprocess
+
+def check_backup_job(client, job_name="restic-backups-factorio.service"):
+    backup_job_text = subprocess.run("systemctl status restic-backups-factorio.service", shell=True, check=True)
+    
+
 
 def main():
     rcon_address = os.getenv("FB_RCON_ADDRESS")
     rcon_port = os.getenv("FB_RCON_PORT")
     rcon_password = os.getenv("FB_RCON_PASSWORD")
     webhook_url = os.getenv("FB_WEBHOOK_URL")
+    backup_job_service = os.getenv("FB_BACKUP_JOB")
     previous_response = None
     previous_player_count = None
     while True:
