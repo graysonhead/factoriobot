@@ -7,12 +7,14 @@ import re
 ONLINE_SEARCH_PATTERN = re.compile('\\s\\s([a-zA-Z0-9]+)\\s\(online\)')
 
 
+
 def main():
     rcon_address = os.getenv("FB_RCON_ADDRESS")
     rcon_port = os.getenv("FB_RCON_PORT")
     rcon_password = os.getenv("FB_RCON_PASSWORD")
     webhook_url = os.getenv("FB_WEBHOOK_URL")
     current_players = None
+
     while True:
         with Client(rcon_address, int(rcon_port), passwd=rcon_password) as client:
             response = client.run('/players', 'online')
